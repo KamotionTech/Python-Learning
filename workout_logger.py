@@ -1,5 +1,8 @@
 #
+# List, stores all workout entries.
+# Per entry = dictionary
 
+# Prints title
 workouts = []
 print("Workout Logger")
 
