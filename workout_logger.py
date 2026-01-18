@@ -18,12 +18,16 @@ while True:
     if exercise == "done":
         break # exit loop
 
-# User input sets
-sets = int(input("Sets "))
+#
+    try:
+        sets = int(input("Sets: ")) # Convert user input into number (int)
+        reps = int(input("Reps: "))
 
-# User input reps
-reps = int(input("Reps: "))
-
+# Tell user what went wrong
+# Continue skip loop iteration and retry
+    except ValueError:
+        print("Please enter numbers only for sets and reps.")
+        continue
 
 # Create dictionary to group related data
 # One dicitonary = one workout entry
