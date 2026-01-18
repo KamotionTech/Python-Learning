@@ -35,16 +35,27 @@ while True:
 
 # Create dictionary to group related data
 # One dicitonary = one workout entry
-entry = {
-    "exercise": exercise,
-    "sets": sets,
-    "reps": reps,
-}
+    entry = {
+        "exercise": exercise,
+        "sets": sets,
+        "reps": reps,
+    }
 
 # Add dictionary to workout list
 # Append puts it at end of list
-workouts.append(entry)
+    workouts.append(entry)
 
-# Print all workouts after loop is done
-print(workouts)
+# Print summary of workouts after loop is done
+# \n adds a blank line before the text
+print("\nWorkout Summary:")
+
+# Loop through each wokrout entry in the list
+for entry in workouts:
+    # Access valeus in the dictionary using their keys
+    exercise = entry["exercise"]
+    sets = entry["sets"]
+    reps = entry["reps"]
+
+    # Print one workout in a readable format
+    print(f"{exercise}: {sets} sets x {reps} reps")
 
