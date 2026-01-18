@@ -10,8 +10,12 @@ print("Workout Logger")
 while True:
 # Ask use for exercise
 # User input, returns string
-    exercise = input("Exercise name (or 'done'): ")
-
+    exercise = input("Exercise name (or 'done'): ").strip()
+    # .strip() removes lead & trail spaces from user input
+    exercise = exercise.lower()
+    # .lower() converts strip to all lowercase characters
+    # Allow us to compare input consistently throughout
+    # DONE, Done, etc all become "done"
 # If user types 'done', loop stops
 # == means "is equal to"
 
