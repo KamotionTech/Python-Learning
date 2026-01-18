@@ -16,12 +16,16 @@ while True:
     # .lower() converts strip to all lowercase characters
     # Allow us to compare input consistently throughout
     # DONE, Done, etc all become "done"
+
+# If user enteres empty input
+    if exercise == "":
+        print("Exercise name cannot be empty.")
+        continue
+
 # If user types 'done', loop stops
 # == means "is equal to"
-
     if exercise == "done":
         break # exit loop
-
 #
     try:
         sets = int(input("Sets: ")) # Convert user input into number (int)
