@@ -49,17 +49,28 @@ while True:
 # Append puts it at end of list
     workouts.append(entry)
 
-# Print summary of workouts after loop is done
-# \n adds a blank line before the text
-print("\nWorkout Summary:")
+def print_workout_summary(workouts):
+    # This function prints all workout entries in a readable format
+    
+    print("\nWorkout Summary:")
+    # Print a header before listing workouts
 
-# Loop through each wokrout entry in the list
-for entry in workouts:
-    # Access valeus in the dictionary using their keys
-    exercise = entry["exercise"]
-    sets = entry["sets"]
-    reps = entry["reps"]
+    for entry in workouts:
+        # Loop through each wokrout dictionary in the list
 
-    # Print one workout in a readable format
-    print(f"{exercise}: {sets} sets x {reps} reps")
+        exercise = entry["exercise"]
+        # Get the exercise name from dictionary
+
+        sets = entry["sets"]
+        # Get the number of sets
+
+        reps = entry["reps"]
+        # Get the number of reps
+
+        print(f"{exercise}: {sets} sets x {reps} reps")
+        # Print one formatted workout line
+
+print_workout_summary(workouts)
+        # Call the function and pass in the workouts list
+
 
