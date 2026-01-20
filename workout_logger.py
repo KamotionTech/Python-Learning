@@ -51,7 +51,7 @@ def get_workout_entry():
             weight = None
             # If conversion fails, ignore weight
 
-    unit_input = input("Unit (optional, unit of weight,press enter to skip,):").strip().lower()
+    unit_input = input("Unit (optional, lb/kg, press enter to skip,):").strip().lower()
     # Ask for optional unit and normalize it
 
     if unit_input == "":
