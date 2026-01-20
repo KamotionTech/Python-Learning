@@ -1,76 +1,93 @@
-#
-# List, stores all workout entries.
-# Per entry = dictionary
+# List that stores all workout entries
+# Each entry in the list is a dictionary
+workouts = []  # Create empty list to store workouts
 
-# Prints title
-workouts = []
-print("Workout Logger")
+print("Workout Logger")  # Print title so we know the script started
 
-#Loop continues running until stopped with 'break'
-while True:
-# Ask use for exercise
-# User input, returns string
+
+def get_workout_entry():
+    # This function asks the user for ONE workout entry
+    # It returns a dictionary if the entry is valid
+    # It returns None if input is invalid
+    # It returns "done" if the user wants to stop
+
     exercise = input("Exercise name (or 'done'): ").strip()
-    # .strip() removes lead & trail spaces from user input
-    exercise = exercise.lower()
-    # .lower() converts strip to all lowercase characters
-    # Allow us to compare input consistently throughout
-    # DONE, Done, etc all become "done"
+    # Ask for exercise name and remove extra spaces from ends
 
-# If user enteres empty input
+    exercise = exercise.lower()
+    # Normalize input to lowercase so DONE, Done, done all become "done"
+
+    if exercise == "done":
+        return "done"  # Signal that user is finished
+
     if exercise == "":
         print("Exercise name cannot be empty.")
-        continue
+        return None  # Signal invalid input
 
-# If user types 'done', loop stops
-# == means "is equal to"
-    if exercise == "done":
-        break # exit loop
-#
     try:
-        sets = int(input("Sets: ")) # Convert user input into number (int)
-        reps = int(input("Reps: "))
+        sets = int(input("Sets: "))
+        # Convert sets input into an integer
 
-# Tell user what went wrong
-# Continue skip loop iteration and retry
+        reps = int(input("Reps: "))
+        # Convert reps input into an integer
     except ValueError:
         print("Please enter numbers only for sets and reps.")
-        continue
+        return None  # Signal invalid input
 
-# Create dictionary to group related data
-# One dicitonary = one workout entry
     entry = {
         "exercise": exercise,
         "sets": sets,
         "reps": reps,
     }
+    # Create a dictionary that represents one workout entry
 
-# Add dictionary to workout list
-# Append puts it at end of list
-    workouts.append(entry)
+    return entry  # Send the dictionary back to the caller
+
 
 def print_workout_summary(workouts):
     # This function prints all workout entries in a readable format
-    
+
     print("\nWorkout Summary:")
     # Print a header before listing workouts
 
+    if not workouts:
+        print("No workouts logged yet.")
+        # Tell the user the list is empty
+        return
+        # Exit the function early so we don't run the loop below
+
     for entry in workouts:
-        # Loop through each wokrout dictionary in the list
+        # Loop through each workout dictionary in the list
 
         exercise = entry["exercise"]
-        # Get the exercise name from dictionary
+        # Get the exercise name from the dictionary
 
         sets = entry["sets"]
-        # Get the number of sets
+        # Get the number of sets from the dictionary
 
         reps = entry["reps"]
-        # Get the number of reps
+        # Get the number of reps from the dictionary
 
         print(f"{exercise}: {sets} sets x {reps} reps")
         # Print one formatted workout line
 
+
+# Main loop: keep getting entries until user is done
+while True:
+    entry = get_workout_entry()
+    # Ask the function for one workout entry
+
+    if entry == "done":
+        break
+        # Stop looping if the function signals done
+
+    if entry is None:
+        continue
+        # Retry loop if input invalid
+
+    workouts.append(entry)
+    # Add the returned workout dictionary to the list
+
+
 print_workout_summary(workouts)
-        # Call the function and pass in the workouts list
-
-
+# Print the summary after the loop ends
