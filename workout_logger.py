@@ -32,12 +32,46 @@ def get_workout_entry():
         # Convert reps input into an integer
     except ValueError:
         print("Please enter numbers only for sets and reps.")
-        return None  # Signal invalid input
+        return None
+        # Signal invalid input
+    
+    weight = None
+    unit = None
+    # Default values so variables always exist
+
+    weight_input = input("Weight (optional, press Enter to skip): ").strip()
+    # Ask for optional weight
+
+    if weight_input != "":
+        try:
+            weight = float(weight_input)
+            # Convert weight to a number (float allows decimals)
+        except ValueError:
+            print("Invalid weight entered. Skipping weight.")
+            weight = None
+            # If conversion fails, ignore weight
+
+    unit_input = input("Unit (optional, unit of weight,press enter to skip,):").strip().lower()
+    # Ask for optional unit and normalize it
+
+    if unit_input == "":
+        unit = None
+        # No unit entered, store None
+    elif unit_input in ("lb", "kg"):
+        unit = unit_input
+        # Store the unit if it is valid
+    else:
+        print("Invalid unit entered. Skipping unit.")
+        unit = None
+        # If unit is not lb or kg, ignore it
+
 
     entry = {
         "exercise": exercise,
         "sets": sets,
         "reps": reps,
+        "weight": weight,
+        "unit": unit,
     }
     # Create a dictionary that represents one workout entry
 
@@ -68,8 +102,24 @@ def print_workout_summary(workouts):
         reps = entry["reps"]
         # Get the number of reps from the dictionary
 
-        print(f"{exercise}: {sets} sets x {reps} reps")
-        # Print one formatted workout line
+        weight = entry["weight"]
+        # Get the weight from the dictionary
+
+        unit = entry["unit"]
+        # Get the unit from the dictionary
+
+        if weight is not None:
+            # Only print weight if it exists
+
+            if unit is not None:
+                print(f"{exercise}: {sets} sets x {reps} reps @ {weight} {unit}")
+                # Print workout including weight and unit
+            else:
+                print(f"{exercise}: {sets} sets x {reps} reps @ {weight}")
+                # Print workout including weight but no unit
+        else:
+            print(f"{exercise}: {sets} sets x {reps} reps")
+            # Print workout without weight
 
 
 # Main loop: keep getting entries until user is done
