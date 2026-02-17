@@ -14,17 +14,19 @@ def get_workout_entry():
     exercise = input("Exercise name (or 'done' / 'undo'): ").strip()
     # Ask for exercise name and remove extra spaces from ends
 
-    exercise = exercise.lower()
-    if exercise == "undo":
+    
+    if exercise.lower() == "undo":
         return "undo"
     # Normalize input to lowercase so DONE, Done, done all become "done"
 
-    if exercise == "done":
+    if exercise.lower() == "done":
         return "done"  # Signal that user is finished
 
     if exercise == "":
         print("Exercise name cannot be empty.")
         return None  # Signal invalid input
+
+    exercise = exercise.title()
 
     try:
         sets = int(input("Sets: "))
