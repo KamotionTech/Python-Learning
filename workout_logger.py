@@ -11,10 +11,12 @@ def get_workout_entry():
     # It returns None if input is invalid
     # It returns "done" if the user wants to stop
 
-    exercise = input("Exercise name (or 'done'): ").strip()
+    exercise = input("Exercise name (or 'done' / 'undo'): ").strip()
     # Ask for exercise name and remove extra spaces from ends
 
     exercise = exercise.lower()
+    if exercise == "undo":
+        return "undo"
     # Normalize input to lowercase so DONE, Done, done all become "done"
 
     if exercise == "done":
@@ -35,6 +37,10 @@ def get_workout_entry():
         return None
         # Signal invalid input
     
+    if sets <= 0 or reps <= 0:
+        print("Sets and reps must be greater than 0.")
+        return None
+    
     weight = None
     unit = None
     # Default values so variables always exist
@@ -50,6 +56,9 @@ def get_workout_entry():
             print("Invalid weight entered. Skipping weight.")
             weight = None
             # If conversion fails, ignore weight
+    if weight is not None and weight < 0:
+        print("Weight cannot be negative. Skipping weight.")
+        weight = None
 
     unit_input = input("Unit (optional, lb/kg, press enter to skip,):").strip().lower()
     # Ask for optional unit and normalize it
@@ -130,6 +139,14 @@ while True:
     if entry == "done":
         break
         # Stop looping if the function signals done
+
+    if entry == "undo":
+        if workouts:
+            removed = workouts.pop()
+            print(f"Removed last entry: {removed['exercise']}")
+        else:
+            print("Nothing to undo yet.")
+        continue
 
     if entry is None:
         continue
