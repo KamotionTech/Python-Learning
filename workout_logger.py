@@ -122,9 +122,6 @@ def print_workout_summary(workouts):
 
         volume = None
 
-        if total_volume > 0:
-            print(f"\nSession Totaly Volume: {total_volume}")
-
         if weight is not None:
             volume = sets * reps * weight
             total_volume += volume
@@ -134,15 +131,17 @@ def print_workout_summary(workouts):
             # Only print weight if it exists
 
             if unit is not None:
-                print(f"{exercise}: {sets} sets x {reps} reps @ {weight} {unit} | Volume: {volume}")
+                print(f"{exercise}: {sets} sets x {reps} reps @ {weight} {unit} | Volume: {round(volume, 2)}")
                 # Print workout including weight and unit
             else:
-                print(f"{exercise}: {sets} sets x {reps} reps @ {weight } | Volume: {volume}")
+                print(f"{exercise}: {sets} sets x {reps} reps @ {weight } | Volume: {round(volume, 2)}")
                 # Print workout including weight but no unit
         else:
             print(f"{exercise}: {sets} sets x {reps} reps")
             # Print workout without weight
-
+            
+    if total_volume > 0:
+        print(f"\nSession Total Volume: {round(total_volume, 2)}")
 
 # Main loop: keep getting entries until user is done
 while True:
