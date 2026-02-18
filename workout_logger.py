@@ -93,6 +93,7 @@ def print_workout_summary(workouts):
     # This function prints all workout entries in a readable format
 
     print("\nWorkout Summary:")
+    total_volume = 0
     # Print a header before listing workouts
 
     if not workouts:
@@ -119,14 +120,24 @@ def print_workout_summary(workouts):
         unit = entry["unit"]
         # Get the unit from the dictionary
 
+        volume = None
+
+        if total_volume > 0:
+            print(f"\nSession Totaly Volume: {total_volume}")
+
+        if weight is not None:
+            volume = sets * reps * weight
+            total_volume += volume
+        # Total volume of lifts
+
         if weight is not None:
             # Only print weight if it exists
 
             if unit is not None:
-                print(f"{exercise}: {sets} sets x {reps} reps @ {weight} {unit}")
+                print(f"{exercise}: {sets} sets x {reps} reps @ {weight} {unit} | Volume: {volume}")
                 # Print workout including weight and unit
             else:
-                print(f"{exercise}: {sets} sets x {reps} reps @ {weight}")
+                print(f"{exercise}: {sets} sets x {reps} reps @ {weight } | Volume: {volume}")
                 # Print workout including weight but no unit
         else:
             print(f"{exercise}: {sets} sets x {reps} reps")
