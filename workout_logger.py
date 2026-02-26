@@ -1,7 +1,7 @@
 # List that stores all workout entries
 # Each entry in the list is a dictionary
 import json
-workouts = []  # Create empty list to store workouts
+workouts = load_workouts()  # Create empty list to store workouts
 
 print("Workout Logger")  # Print title so we know the script started
 
@@ -176,7 +176,7 @@ def save_workouts(workouts):
     with open("workouts.json", "w") as file:
         json.dump(workouts, file, indent=4)
 
-def load_workotus():
+def load_workouts():
     try:
         with open("workouts_json", "r") as file:
             return json.load(file)
