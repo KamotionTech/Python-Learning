@@ -1,10 +1,24 @@
 # List that stores all workout entries
 # Each entry in the list is a dictionary
 import json
-workouts = load_workouts()  # Create empty list to store workouts
+
 
 print("Workout Logger")  # Print title so we know the script started
+# Load existing workouts from file (persistent storage)
 
+
+def save_workouts(workouts):
+    with open("workouts.json", "w") as file:
+        json.dump(workouts, file, indent=4)
+
+def load_workouts():
+    try:
+        with open("workouts.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+    
+workouts = load_workouts()
 
 def get_workout_entry():
     # This function asks the user for ONE workout entry
@@ -115,10 +129,10 @@ def print_workout_summary(workouts):
         reps = entry["reps"]
         # Get the number of reps from the dictionary
 
-        weight = entry["weight"]
+        weight = entry.get("weight")
         # Get the weight from the dictionary
 
-        unit = entry["unit"]
+        unit = entry.get("unit")
         # Get the unit from the dictionary
 
         volume = None
@@ -172,13 +186,5 @@ while True:
 print_workout_summary(workouts)
 # Print the summary after the loop ends
 
-def save_workouts(workouts):
-    with open("workouts.json", "w") as file:
-        json.dump(workouts, file, indent=4)
-
-def load_workouts():
-    try:
-        with open("workouts_json", "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return []
+save_workouts(workouts)
+    
