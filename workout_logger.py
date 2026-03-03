@@ -18,6 +18,32 @@ def load_workouts():
     except FileNotFoundError:
         return []
     
+def delete_workout_by_number(workouts):
+    if not workouts:
+        print("No workouts to delete.")
+        return
+    
+    print_workout_summary(workouts)
+
+    choice = input("\nEnter workout number to delete (or press Enter to cancel): ").strip()
+    if choice == "":
+        print("Cancelled.")
+        return
+    
+    try:
+        num = int(choice)
+    except ValueError:
+        print("Please enter a valid number.")
+        return
+    
+    if num < 1 or num > len(workouts):
+        print("That number is out of range.")
+        return
+    
+    removed = workouts.pop(num - 1) # num-1 converts 1-based to 0-based index
+    save_workouts(workouts)
+    print(f"Deleted: {removed.get('exercise', 'Unknown exercise')}")
+
 workouts = load_workouts()
 
 def get_workout_entry():
@@ -117,7 +143,7 @@ def print_workout_summary(workouts):
         return
         # Exit the function early so we don't run the loop below
 
-    for entry in workouts:
+    for i, entry in enumerate(workouts, start=1):
         # Loop through each workout dictionary in the list
 
         exercise = entry["exercise"]
@@ -146,13 +172,13 @@ def print_workout_summary(workouts):
             # Only print weight if it exists
 
             if unit is not None:
-                print(f"{exercise}: {sets} sets x {reps} reps @ {weight} {unit} | Volume: {round(volume, 2)}")
+                print(f"{i}. {exercise}: {sets} sets x {reps} reps @ {weight} {unit} | Volume: {round(volume, 2)}")
                 # Print workout including weight and unit
             else:
-                print(f"{exercise}: {sets} sets x {reps} reps @ {weight } | Volume: {round(volume, 2)}")
+                print(f"{i}. {exercise}: {sets} sets x {reps} reps @ {weight } | Volume: {round(volume, 2)}")
                 # Print workout including weight but no unit
         else:
-            print(f"{exercise}: {sets} sets x {reps} reps")
+            print(f"{i}. {exercise}: {sets} sets x {reps} reps")
             # Print workout without weight
             
     if total_volume > 0:
@@ -170,6 +196,7 @@ while True:
     if entry == "undo":
         if workouts:
             removed = workouts.pop()
+            save_workouts(workouts)
             print(f"Removed last entry: {removed['exercise']}")
         else:
             print("Nothing to undo yet.")
@@ -181,8 +208,9 @@ while True:
 
     workouts.append(entry)
     # Add the returned workout dictionary to the list
+    save_workouts(workouts)
 
-
+delete_workout_by_number(workouts)
 print_workout_summary(workouts)
 # Print the summary after the loop ends
 
